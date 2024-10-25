@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css" />
+    <title>BMI Calculator</title>
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #e0f2f1;
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: #00bfa5;
+            color: white;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .header p {
+            font-size: 18px;
+            margin: 10px 0 0;
+        }
+
+        /* Center the BMI Calculator Container */
+        .bmi-calculator-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Main Container */
+        .bmi-calculator-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f6fcff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Left section with BMI status */
+        .bmi-status {
+            width: 50%;
+        }
+
+        .bmi-status h3 {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .bmi-status p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        /* Ideal Range and Result Values */
+        .bmi-range,
+        .bmi-result {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .bmi-range span,
+        .bmi-result span {
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background-color: #ff6e72;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 15px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background-color: #ff4d52;
+        }
+
+        .bmi-book-btn {
+            background-color: #ffb74d;
+            color: #fff;
+            border: none;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .bmi-book-btn:hover {
+            background-color: #ff9800;
+        }
+
+        /* Right section with form */
+        .bmi-form {
+            width: 45%;
+        }
+
+        .bmi-form input[type="number"],
+        .bmi-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .bmi-form input[type="number"]::placeholder {
+            color: #aaa;
+        }
+
+        .bmi-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .bmi-form button {
+            width: 100%;
+            background-color: #00bfa5;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        .bmi-form button:hover {
+            background-color: #00897b;
+        }
+
+        /* Image section */
+        .bmi-figure {
+            background-color: #e0f2f1;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .bmi-figure img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        /* Miscellaneous */
+        .bmi-legend {
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>BMI Calculator</h1>
+        <p>Check your body mass</p>
+    </header>
+    <div class="bmi-calculator-wrapper">
+        <div class="bmi-calculator-container">
+            <!-- Left side with BMI status and ideal range -->
+            <div class="bmi-status">
+              <h3 id="bmi-category">Normal</h3>
+              <p id="bmi-message">Normal BMI means that your weight is in the healthy range as per your height.</p>
+              <div class="bmi-range">
+                <span>Ideal Range:</span>
+                <span>18.5 - 24.9</span>
+              </div>
+              <div class="bmi-result">
+                <span>Your BMI:</span>
+                <span id="bmi-value">-</span>
+              </div>
+              <div class="bmi-result">
+                <span>BMI PRIME:</span>
+                <span id="bmi-prime">-</span>
+              </div>
+              <div>
+                <a href="#" class="cta-button">Lose weight with cult</a>
+                <a href="#" class="bmi-book-btn">Book a free trial now</a>
+              </div>
+            </div>
+          
+            <!-- Right side with form -->
+            <div class="bmi-form">
+              <form onsubmit="calculateBMI(event)">
+                <label for="gender">Gender</label>
+                <select id="gender" required>
+                  <option value="">Select</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+          
+                <label for="height">Height (cm)</label>
+                <input type="number" id="height" placeholder="Enter your height" required />
+          
+                <label for="weight">Weight (kg)</label>
+                <input type="number" id="weight" placeholder="Enter your weight" required />
+          
+                <button type="submit">Calculate</button>
+              </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calculateBMI(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get values from the input fields
+            const gender = document.getElementById('gender').value;
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+
+            // BMI Calculation: BMI = weight(kg) / height(m)^2
+            const heightInMeters = height / 100; // Convert height to meters
+            const bmi = weight / (heightInMeters * heightInMeters);
+
+            // Calculate BMI Prime: BMI Prime = BMI / 25
+            const bmiPrime = bmi / 25;
+
+            // Categorize BMI
+            let bmiCategory = "";
+            let message = "";
+
+            if (bmi < 18.5) {
+                bmiCategory = "Underweight";
+                message = "You are underweight for your height. It is recommended to consult with a healthcare provider.";
+            } else if (bmi >= 18.5 && bmi < 24.9) {
+                bmiCategory = "Normal";
+                message = "Your BMI is within the normal range, indicating a healthy weight.";
+            } else {
+                bmiCategory = "Overweight";
+                message = "You are overweight. It's recommended to follow a healthier diet and regular exercise.";
+            }
+
+            // Update the HTML to display the results
+            document.getElementById('bmi-value').textContent = bmi.toFixed(1); // Display BMI value
+            document.getElementById('bmi-prime').textContent = bmiPrime.toFixed(2); // Display BMI Prime value
+            document.getElementById('bmi-category').textContent = bmiCategory; // Display BMI category
+            document.getElementById('bmi-message').textContent = message; // Display message based on BMI
+        }
+
+      </script>
+</html>

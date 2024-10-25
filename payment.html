@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improved Payment UI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .payment-form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            transition: transform 0.3s ease;
+        }
+        .payment-form h2 {
+            margin-bottom: 20px;
+        }
+        .payment-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .payment-form input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .payment-form button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .payment-form button:hover {
+            background-color: #0056b3;
+        }
+        #payment-message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to Your Website</h1>
+    <p><a href="#" id="no-pricing-btn" style="color: #007bff; text-decoration: underline;">No Pricing</a></p>
+
+    <div id="payment-section" class="hidden">
+        <div class="payment-form">
+            <h2>Mock Payment Form</h2>
+            <form id="mock-payment-form">
+                <input type="text" id="cardholder-name" placeholder="Cardholder Name" required>
+                <input type="text" id="card-number" placeholder="Card Number" required>
+                <input type="text" id="expiry-date" placeholder="MM/YY" required>
+                <input type="text" id="cvc" placeholder="CVC" required>
+                <button type="submit">Pay</button>
+            </form>
+            <div id="payment-message" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('mock-payment-form');
+        const messageContainer = document.getElementById('payment-message');
+        const paymentSection = document.getElementById('payment-section');
+        const noPricingButton = document.getElementById('no-pricing-btn');
+
+        // Show the payment form when "No Pricing" is clicked
+        noPricingButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default link behavior
+            paymentSection.classList.toggle('hidden'); // Toggle visibility of payment section
+        });
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent form submission
+
+            // Get the input values
+            const name = document.getElementById('cardholder-name').value;
+            const cardNumber = document.getElementById('card-number').value;
+            const expiryDate = document.getElementById('expiry-date').value;
+            const cvc = document.getElementById('cvc').value;
+
+            // Simple validation
+            if (!name || !cardNumber || !expiryDate || !cvc) {
+                messageContainer.textContent = 'Please fill in all fields.';
+                messageContainer.style.color = 'red';
+                messageContainer.style.display = 'block';
+                return;
+            }
+
+            // Simulate payment processing
+            messageContainer.textContent = 'Processing payment...';
+            messageContainer.style.color = 'black';
+            messageContainer.style.display = 'block';
+
+            // Simulate a delay for payment processing
+            setTimeout(() => {
+                messageContainer.textContent = 'Payment successful! Thank you, ' + name + '!';
+                messageContainer.style.color = 'green';
+            }, 2000);
+        });
+    </script>
+
+</body>
+</html>
